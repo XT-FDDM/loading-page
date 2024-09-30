@@ -2,23 +2,27 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>我的图片画廊</title>
+    <title>我的图片</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black; /* 设置背景颜色为黑色 */
+            overflow: hidden; /* 隐藏溢出内容 */
         }
         img {
             max-width: 100%;
-            height: auto;
-            margin: 20px;
+            max-height: 100%;
+            object-fit: contain; /* 保持图片比例，同时让图片完整地填充容器 */
         }
     </style>
 </head>
 <body>
-    <h1>欢迎来到我的图片画廊</h1>
-    <img src="images/x1.jpg" alt="第一张图片描述">
-    <!-- 继续添加更多的图片 -->
+    <img src="images/x1.jpg" alt="我的图片">
 </body>
 </html>
