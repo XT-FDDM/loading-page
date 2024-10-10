@@ -37,26 +37,34 @@
     <ul id="file-list">
         <!-- 手动添加文件项 -->
         <li>
-            <a href="#" onclick="showDownloadLink('Supplementary Table S1.xlsx')">Supplementary Table S1.xlsx</a>
+            <a href="#" data-filename="Supplementary Table S1.xlsx">Supplementary Table S1.xlsx</a>
             <a class="download-link" href="https://raw.githubusercontent.com/XT-FDDM/loading-page/main/Supplementary Table S1.xlsx" download>Download</a>
         </li>
         <!-- 继续添加其他文件项 -->
     </ul>
 
     <script>
-        function showDownloadLink(fileName) {
-            const listItem = document.querySelector(`li:has(a:contains("${fileName}"))`);
-            const downloadLink = listItem.querySelector('.download-link');
-            if (downloadLink) {
+        function showDownloadLink(event) {
+            // 阻止默认行为（如果有的话）
+            event.preventDefault();
+            
+            // 获取当前点击的a标签
+            const fileNameLink = event.currentTarget;
+            
+            // 获取对应的下载链接
+            const downloadLink = fileNameLink.nextElementSibling;
+            
+            // 显示下载链接
+            if (downloadLink && downloadLink.classList.contains('download-link')) {
                 downloadLink.style.display = 'inline';
             }
         }
 
-        // 隐藏所有下载链接
+        // 为每个文件名链接添加事件监听器
         window.onload = function() {
-            const downloadLinks = document.querySelectorAll('.download-link');
-            downloadLinks.forEach(link => {
-                link.style.display = 'none';
+            const fileNameLinks = document.querySelectorAll('#file-list a');
+            fileNameLinks.forEach(link => {
+                link.addEventListener('click', showDownloadLink);
             });
         };
     </script>
