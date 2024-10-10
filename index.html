@@ -23,34 +23,42 @@
             text-decoration: none;
             color: #007BFF;
         }
+        .download-link {
+            display: none;
+            margin-left: 20px;
+        }
+        li:hover .download-link {
+            display: inline;
+        }
     </style>
 </head>
 <body>
     <h1>Directory Listing</h1>
-    <ul id="file-list"></ul>
+    <ul id="file-list">
+        <!-- 手动添加文件项 -->
+        <li>
+            <a href="#" onclick="showDownloadLink('Supplementary Table S1.xlsx')">Supplementary Table S1.xlsx</a>
+            <a class="download-link" href="https://raw.githubusercontent.com/XT-FDDM/loading-page/main/Supplementary Table S1.xlsx" download>Download</a>
+        </li>
+        <!-- 继续添加其他文件项 -->
+    </ul>
 
     <script>
-        // 获取当前目录下的所有文件
-        fetch('https://api.github.com/repos/XT-FDDM/loading-page/contents/')
-            .then(response => response.json())
-            .then(data => {
-                const fileList = document.getElementById('file-list');
-                data.forEach(item => {
-                    if (item.type === 'file') {
-                        const li = document.createElement('li');
-                        const a = document.createElement('a');
-                        a.href = '#';
-                        a.textContent = item.name;
-                        a.onclick = function(event) {
-                            event.preventDefault();
-                            window.open(item.download_url, '_blank', 'width=600,height=400');
-                        };
-                        li.appendChild(a);
-                        fileList.appendChild(li);
-                    }
-                });
-            })
-            .catch(error => console.error('Error:', error));
+        function showDownloadLink(fileName) {
+            const listItem = document.querySelector(`li:has(a:contains("${fileName}"))`);
+            const downloadLink = listItem.querySelector('.download-link');
+            if (downloadLink) {
+                downloadLink.style.display = 'inline';
+            }
+        }
+
+        // 隐藏所有下载链接
+        window.onload = function() {
+            const downloadLinks = document.querySelectorAll('.download-link');
+            downloadLinks.forEach(link => {
+                link.style.display = 'none';
+            });
+        };
     </script>
 </body>
 </html>
